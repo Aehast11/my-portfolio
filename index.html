@@ -24,7 +24,7 @@
       font-weight: 300;
     }
 
-    /* NAV */
+   
     nav {
       position: sticky;
       top: 0;
@@ -61,7 +61,7 @@
     }
     .nav-links a:hover { color: var(--text); }
 
-    /* HERO */
+  
     .hero {
       padding: 80px 40px 60px;
       max-width: 640px;
@@ -91,9 +91,9 @@
       max-width: 420px;
     }
 
-    /* GALLERY */
+
     #gallery-section {
-      padding: 20px 40px 80px;
+      padding: 20px 40px 100px;
     }
 
     .gallery-toolbar {
@@ -129,14 +129,13 @@
     .filter-btn:hover { color: var(--text); border-color: #ccc; }
     .filter-btn.active { background: var(--text); border-color: var(--text); color: #fff; }
 
-    /* The main gallery grid */
     #portfolio-gallery {
       columns: 3;
       column-gap: 10px;
     }
 
     #portfolio-gallery img {
-      width: 100% !important; /* override inline style */
+      width: 100% !important;
       display: block;
       break-inside: avoid;
       margin-bottom: 10px;
@@ -146,7 +145,6 @@
     }
     #portfolio-gallery img:hover { opacity: 0.88; }
 
-    /* Placeholder tiles shown before Drive is configured */
     .ph-tile {
       break-inside: avoid;
       margin-bottom: 10px;
@@ -156,19 +154,18 @@
       justify-content: center;
       flex-direction: column;
       gap: 8px;
-      color: #ccc;
     }
-    .ph-tile:nth-child(1)  { height: 280px; }
-    .ph-tile:nth-child(2)  { height: 200px; }
-    .ph-tile:nth-child(3)  { height: 240px; }
-    .ph-tile:nth-child(4)  { height: 220px; }
-    .ph-tile:nth-child(5)  { height: 300px; }
-    .ph-tile:nth-child(6)  { height: 200px; }
-    .ph-tile:nth-child(7)  { height: 180px; }
-    .ph-tile:nth-child(8)  { height: 260px; }
-    .ph-tile:nth-child(9)  { height: 210px; }
+    .ph-tile:nth-child(1) { height: 280px; }
+    .ph-tile:nth-child(2) { height: 200px; }
+    .ph-tile:nth-child(3) { height: 240px; }
+    .ph-tile:nth-child(4) { height: 220px; }
+    .ph-tile:nth-child(5) { height: 300px; }
+    .ph-tile:nth-child(6) { height: 200px; }
+    .ph-tile:nth-child(7) { height: 180px; }
+    .ph-tile:nth-child(8) { height: 260px; }
+    .ph-tile:nth-child(9) { height: 210px; }
 
-    .ph-tile svg { opacity: 0.4; }
+    .ph-tile svg { opacity: 0.3; }
     .ph-tile span {
       font-size: 0.65rem;
       letter-spacing: 0.16em;
@@ -185,7 +182,6 @@
       text-align: center;
     }
 
-    /* SETUP BANNER */
     .setup-banner {
       background: var(--white);
       border: 1px solid var(--border);
@@ -217,89 +213,7 @@
       border-radius: 2px;
     }
 
-    /* UPLOAD SECTION */
-    #upload-section {
-      padding: 60px 40px;
-      border-top: 1px solid var(--border);
-      background: var(--white);
-    }
-
-    .upload-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      margin-top: 40px;
-      max-width: 900px;
-    }
-
-    .upload-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .step {
-      display: flex;
-      gap: 18px;
-      padding: 18px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .step:first-child { padding-top: 0; }
-    .step:last-child { border-bottom: none; }
-    .step-n {
-      font-size: 0.7rem;
-      font-weight: 500;
-      color: #ccc;
-      min-width: 20px;
-      padding-top: 2px;
-    }
-    .step-body {}
-    .step-title {
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-    .step-desc {
-      font-size: 0.78rem;
-      line-height: 1.6;
-      color: var(--muted);
-    }
-
-    .drive-links { display: flex; flex-direction: column; gap: 10px; }
-    .drive-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 12px 20px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.74rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-decoration: none;
-      cursor: pointer;
-      border-radius: 2px;
-      transition: all 0.15s;
-    }
-    .drive-btn.primary { background: var(--text); color: #fff; border: 1px solid var(--text); }
-    .drive-btn.primary:hover { opacity: 0.82; }
-    .drive-btn.secondary { background: none; color: var(--text); border: 1px solid var(--border); }
-    .drive-btn.secondary:hover { border-color: #aaa; }
-
-    .section-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 10px;
-    }
-    .section-title {
-      font-size: 1.5rem;
-      font-weight: 300;
-      letter-spacing: -0.01em;
-    }
-
-    /* LIGHTBOX */
+ 
     .lightbox {
       position: fixed;
       inset: 0;
@@ -335,7 +249,7 @@
     }
     .lightbox-close:hover { color: var(--text); border-color: #aaa; }
 
-    /* FOOTER */
+   
     footer {
       padding: 28px 40px;
       border-top: 1px solid var(--border);
@@ -355,8 +269,6 @@
       .hero { padding: 48px 20px 40px; }
       #gallery-section { padding: 16px 20px 60px; }
       #portfolio-gallery { columns: 2; }
-      .upload-grid { grid-template-columns: 1fr; gap: 36px; }
-      #upload-section { padding: 48px 20px; }
       footer { padding: 24px 20px; flex-direction: column; gap: 10px; }
     }
     @media (max-width: 480px) {
@@ -366,23 +278,20 @@
 </head>
 <body>
 
-  <!-- NAV -->
+
   <nav>
     <div class="nav-left">Drone Photography</div>
     <ul class="nav-links">
       <li><a href="#gallery-section">Gallery</a></li>
-      <li><a href="#upload-section">Upload</a></li>
     </ul>
   </nav>
 
-  <!-- HERO -->
   <div class="hero">
     <div class="hero-tag">Aerial Photography</div>
     <h1>A view from<br>up there.</h1>
     <p>Landscapes, cities, and coastlines shot from the air. Scroll to explore the collection.</p>
   </div>
 
-  <!-- GALLERY -->
   <section id="gallery-section">
     <div class="gallery-toolbar">
       <div class="gallery-count" id="gallery-count">— photos</div>
@@ -396,75 +305,32 @@
 
     <div id="setup-banner" class="setup-banner" style="display:none;">
       <div class="setup-dot"></div>
-      <p>To load your photos, replace <code>YOUR_FOLDER_ID_HERE</code> and <code>YOUR_GOOGLE_API_KEY</code> in the script below with your own values. Set your Drive folder sharing to <strong>"Anyone with the link — Viewer"</strong>.</p>
+      <p>To load your photos, replace <code>YOUR_FOLDER_ID_HERE</code> and <code>YOUR_GOOGLE_API_KEY</code> in the script with your own values. Set your Drive folder sharing to <strong>"Anyone with the link — Viewer"</strong>.</p>
     </div>
 
-    <!-- ↓ YOUR GOOGLE DRIVE GALLERY CODE ↓ -->
     <div id="portfolio-gallery">Loading photos...</div>
   </section>
 
-  <!-- UPLOAD -->
-  <section id="upload-section">
-    <div class="section-label">Manage</div>
-    <div class="section-title">Add Photos</div>
-    <div class="upload-grid">
-      <div class="upload-steps">
-        <div class="step">
-          <div class="step-n">01</div>
-          <div class="step-body">
-            <div class="step-title">Open your Drive folder</div>
-            <div class="step-desc">Go to the Google Drive folder linked to this portfolio.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-n">02</div>
-          <div class="step-body">
-            <div class="step-title">Drop in your images</div>
-            <div class="step-desc">Drag and drop JPG, PNG, or WebP files directly into the folder.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-n">03</div>
-          <div class="step-body">
-            <div class="step-title">Refresh the page</div>
-            <div class="step-desc">Your new photos will appear in the gallery automatically.</div>
-          </div>
-        </div>
-      </div>
-      <div class="drive-links">
-        <a href="https://drive.google.com" target="_blank" class="drive-btn primary">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M6.28 1l-5.5 9.53 2.75 4.76L8.5 5.77 6.28 1zM1 15.27l2.75 4.76h11L12 15.27H1zm11.22-13.5L7.5 10.53 10.25 15.3l4.75-8.26-2.78-5.27zm5.22 9.5L12.5 20.03h5.5l5.5-9.53-2.75-4.76-4 6.53z"/>
-          </svg>
-          Open Google Drive
-        </a>
-        <a href="https://console.cloud.google.com" target="_blank" class="drive-btn secondary">Get API Key →</a>
-      </div>
-    </div>
-  </section>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-text">Drone Portfolio</div>
     <div class="footer-text">© 2025</div>
   </footer>
 
-  
+
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lightbox-close">✕ Close</button>
     <img id="lightbox-img" src="" alt="">
   </div>
 
-
   <script>
 
-    const FOLDER_ID = '1hGzKb7JICrGaD7D75tmtakUt7L7ITqpM'; 
-    const API_KEY   = 'AIzaSyDAs0_lPrna4KQpAu-uAAHVrutQ8U-8sl0'; 
+    const FOLDER_ID = '1hGzKb7JICrGaD7D75tmtakUt7L7ITqpM';
+    const API_KEY   = 'AIzaSyDAs0_lPrna4KQpAu-uAAHVrutQ8U-8sl0';
 
     async function fetchDriveImages() {
       const container = document.getElementById('portfolio-gallery');
 
-     
       if (FOLDER_ID === 'YOUR_FOLDER_ID_HERE') {
         document.getElementById('setup-banner').style.display = 'flex';
         showPlaceholders(container);
@@ -476,7 +342,7 @@
       try {
         const response = await fetch(url);
         const data = await response.json();
-        container.innerHTML = ''; 
+        container.innerHTML = '';
 
         if (!data.files || data.files.length === 0) {
           container.innerHTML = '<p class="loading-text">No photos found in your Drive folder.</p>';
@@ -487,7 +353,6 @@
 
         data.files.forEach((file, i) => {
           const img = document.createElement('img');
-
           img.src = `https://drive.google.com/thumbnail?id=${file.id}&sz=w1000`;
           img.alt = file.name;
           img.loading = 'lazy';
@@ -521,6 +386,7 @@
       }
     }
 
+ 
     function openLightbox(src) {
       document.getElementById('lightbox-img').src = src;
       document.getElementById('lightbox').classList.add('open');
@@ -533,7 +399,6 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
     });
-
 
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
