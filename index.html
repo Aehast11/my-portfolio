@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Drone Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f9f9f9;
+      --white: #ffffff;
+      --border: #e8e8e8;
+      --text: #1c1c1c;
+      --muted: #888;
+      --light: #f2f2f2;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(249,249,249,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-left {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      padding: 80px 40px 60px;
+      max-width: 640px;
+    }
+
+    .hero-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      margin-top: 16px;
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 420px;
+    }
+
+    /* GALLERY */
+    #gallery-section {
+      padding: 20px 40px 80px;
+    }
+
+    .gallery-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .gallery-count {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .filter-row { display: flex; gap: 6px; }
+    .filter-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 6px 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover { color: var(--text); border-color: #ccc; }
+    .filter-btn.active { background: var(--text); border-color: var(--text); color: #fff; }
+
+    /* The main gallery grid */
+    #portfolio-gallery {
+      columns: 3;
+      column-gap: 10px;
+    }
+
+    #portfolio-gallery img {
+      width: 100% !important; /* override inline style */
+      display: block;
+      break-inside: avoid;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      background: var(--light);
+    }
+    #portfolio-gallery img:hover { opacity: 0.88; }
+
+    /* Placeholder tiles shown before Drive is configured */
+    .ph-tile {
+      break-inside: avoid;
+      margin-bottom: 10px;
+      background: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      color: #ccc;
+    }
+    .ph-tile:nth-child(1)  { height: 280px; }
+    .ph-tile:nth-child(2)  { height: 200px; }
+    .ph-tile:nth-child(3)  { height: 240px; }
+    .ph-tile:nth-child(4)  { height: 220px; }
+    .ph-tile:nth-child(5)  { height: 300px; }
+    .ph-tile:nth-child(6)  { height: 200px; }
+    .ph-tile:nth-child(7)  { height: 180px; }
+    .ph-tile:nth-child(8)  { height: 260px; }
+    .ph-tile:nth-child(9)  { height: 210px; }
+
+    .ph-tile svg { opacity: 0.4; }
+    .ph-tile span {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #bbb;
+    }
+
+    .loading-text {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    /* SETUP BANNER */
+    .setup-banner {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .setup-dot {
+      width: 8px; height: 8px;
+      background: #f0a500;
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .setup-banner p {
+      font-size: 0.8rem;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+    .setup-banner code {
+      background: var(--light);
+      padding: 1px 6px;
+      font-size: 0.74rem;
+      font-family: 'Courier New', monospace;
+      color: var(--text);
+      border-radius: 2px;
+    }
+
+    /* UPLOAD SECTION */
+    #upload-section {
+      padding: 60px 40px;
+      border-top: 1px solid var(--border);
+      background: var(--white);
+    }
+
+    .upload-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      margin-top: 40px;
+      max-width: 900px;
+    }
+
+    .upload-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .step {
+      display: flex;
+      gap: 18px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step:first-child { padding-top: 0; }
+    .step:last-child { border-bottom: none; }
+    .step-n {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #ccc;
+      min-width: 20px;
+      padding-top: 2px;
+    }
+    .step-body {}
+    .step-title {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .step-desc {
+      font-size: 0.78rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .drive-links { display: flex; flex-direction: column; gap: 10px; }
+    .drive-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.74rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s;
+    }
+    .drive-btn.primary { background: var(--text); color: #fff; border: 1px solid var(--text); }
+    .drive-btn.primary:hover { opacity: 0.82; }
+    .drive-btn.secondary { background: none; color: var(--text); border: 1px solid var(--border); }
+    .drive-btn.secondary:hover { border-color: #aaa; }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: -0.01em;
+    }
+
+    /* LIGHTBOX */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.95);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px; right: 32px;
+      background: none;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s;
+    }
+    .lightbox-close:hover { color: var(--text); border-color: #aaa; }
+
+    /* FOOTER */
+    footer {
+      padding: 28px 40px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-text {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ccc;
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .hero { padding: 48px 20px 40px; }
+      #gallery-section { padding: 16px 20px 60px; }
+      #portfolio-gallery { columns: 2; }
+      .upload-grid { grid-template-columns: 1fr; gap: 36px; }
+      #upload-section { padding: 48px 20px; }
+      footer { padding: 24px 20px; flex-direction: column; gap: 10px; }
+    }
+    @media (max-width: 480px) {
+      #portfolio-gallery { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-left">Drone Photography</div>
+    <ul class="nav-links">
+      <li><a href="#gallery-section">Gallery</a></li>
+      <li><a href="#upload-section">Upload</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Aerial Photography</div>
+    <h1>A view from<br>up there.</h1>
+    <p>Landscapes, cities, and coastlines shot from the air. Scroll to explore the collection.</p>
+  </div>
+
+  <!-- GALLERY -->
+  <section id="gallery-section">
+    <div class="gallery-toolbar">
+      <div class="gallery-count" id="gallery-count">— photos</div>
+      <div class="filter-row">
+        <button class="filter-btn active">All</button>
+        <button class="filter-btn">Landscape</button>
+        <button class="filter-btn">Urban</button>
+        <button class="filter-btn">Coastal</button>
+      </div>
+    </div>
+
+    <div id="setup-banner" class="setup-banner" style="display:none;">
+      <div class="setup-dot"></div>
+      <p>To load your photos, replace <code>YOUR_FOLDER_ID_HERE</code> and <code>YOUR_GOOGLE_API_KEY</code> in the script below with your own values. Set your Drive folder sharing to <strong>"Anyone with the link — Viewer"</strong>.</p>
+    </div>
+
+    <!-- ↓ YOUR GOOGLE DRIVE GALLERY CODE ↓ -->
+    <div id="portfolio-gallery">Loading photos...</div>
+  </section>
+
+  <!-- UPLOAD -->
+  <section id="upload-section">
+    <div class="section-label">Manage</div>
+    <div class="section-title">Add Photos</div>
+    <div class="upload-grid">
+      <div class="upload-steps">
+        <div class="step">
+          <div class="step-n">01</div>
+          <div class="step-body">
+            <div class="step-title">Open your Drive folder</div>
+            <div class="step-desc">Go to the Google Drive folder linked to this portfolio.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">02</div>
+          <div class="step-body">
+            <div class="step-title">Drop in your images</div>
+            <div class="step-desc">Drag and drop JPG, PNG, or WebP files directly into the folder.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">03</div>
+          <div class="step-body">
+            <div class="step-title">Refresh the page</div>
+            <div class="step-desc">Your new photos will appear in the gallery automatically.</div>
+          </div>
+        </div>
+      </div>
+      <div class="drive-links">
+        <a href="https://drive.google.com" target="_blank" class="drive-btn primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6.28 1l-5.5 9.53 2.75 4.76L8.5 5.77 6.28 1zM1 15.27l2.75 4.76h11L12 15.27H1zm11.22-13.5L7.5 10.53 10.25 15.3l4.75-8.26-2.78-5.27zm5.22 9.5L12.5 20.03h5.5l5.5-9.53-2.75-4.76-4 6.53z"/>
+          </svg>
+          Open Google Drive
+        </a>
+        <a href="https://console.cloud.google.com" target="_blank" class="drive-btn secondary">Get API Key →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-text">Drone Portfolio</div>
+    <div class="footer-text">© 2025</div>
+  </footer>
+
+  
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close">✕ Close</button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+
+  <script>
+
+    const FOLDER_ID = '1hGzKb7JICrGaD7D75tmtakUt7L7ITqpM'; 
+    const API_KEY   = 'AIzaSyDAs0_lPrna4KQpAu-uAAHVrutQ8U-8sl0'; 
+
+    async function fetchDriveImages() {
+      const container = document.getElementById('portfolio-gallery');
+
+     
+      if (FOLDER_ID === 'YOUR_FOLDER_ID_HERE') {
+        document.getElementById('setup-banner').style.display = 'flex';
+        showPlaceholders(container);
+        return;
+      }
+
+      const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+mimeType+contains+'image/'&fields=files(id,name)&key=${API_KEY}`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        container.innerHTML = ''; 
+
+        if (!data.files || data.files.length === 0) {
+          container.innerHTML = '<p class="loading-text">No photos found in your Drive folder.</p>';
+          return;
+        }
+
+        document.getElementById('gallery-count').textContent = `${data.files.length} photos`;
+
+        data.files.forEach((file, i) => {
+          const img = document.createElement('img');
+
+          img.src = `https://drive.google.com/thumbnail?id=${file.id}&sz=w1000`;
+          img.alt = file.name;
+          img.loading = 'lazy';
+          img.style.opacity = '0';
+          img.style.transition = `opacity 0.4s ${i * 0.05}s ease`;
+          img.addEventListener('load', () => img.style.opacity = '1');
+          img.addEventListener('click', () => openLightbox(img.src));
+          container.appendChild(img);
+        });
+
+      } catch (error) {
+        container.innerHTML = '<p class="loading-text">Could not load photos. Check your API key and folder ID.</p>';
+        console.error('Error fetching images:', error);
+      }
+    }
+
+    function showPlaceholders(container) {
+      container.innerHTML = '';
+      document.getElementById('gallery-count').textContent = '— photos';
+      for (let i = 0; i < 9; i++) {
+        const tile = document.createElement('div');
+        tile.className = 'ph-tile';
+        tile.innerHTML = `
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect x="2" y="6" width="24" height="17" rx="1.5" stroke="#ccc" stroke-width="1.2"/>
+            <circle cx="14" cy="14.5" r="5" stroke="#ccc" stroke-width="1.2"/>
+            <line x1="2" y1="10.5" x2="26" y2="10.5" stroke="#ccc" stroke-width="1.2"/>
+          </svg>
+          <span>Photo ${i + 1}</span>`;
+        container.appendChild(tile);
+      }
+    }
+
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('open');
+    }
+    document.getElementById('lightbox-close').onclick = () =>
+      document.getElementById('lightbox').classList.remove('open');
+    document.getElementById('lightbox').addEventListener('click', e => {
+      if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+    });
+
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    fetchDriveImages();
+  </script>
+
+</body>
+</html>
