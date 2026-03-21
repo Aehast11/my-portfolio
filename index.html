@@ -18,7 +18,6 @@
       --green-d:    #3d5e1f;
       --brown:      #7a4f2e;
       --brown-l:    #9b6540;
-      --brown-d:    #5a3820;
       --text:       #e8e0d0;
       --muted:      #8a9090;
       --border:     rgba(90, 138, 46, 0.22);
@@ -170,7 +169,7 @@
     }
 
     #server { background: var(--bg2); border-bottom: 2px solid var(--green-d); }
-    #leaks  { background: var(--bg);  }
+    #leaks  { background: var(--bg); }
 
     .sec-label {
       font-family: 'Press Start 2P', monospace;
@@ -222,12 +221,12 @@
     }
 
     .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: #555; }
-    .dot.online { background: var(--green-ll); animation: pulse 2s infinite; }
+    .dot.online  { background: var(--green-ll); animation: pulse 2s infinite; }
     .dot.offline { background: var(--red); }
 
     @keyframes pulse {
       0%, 100% { box-shadow: 0 0 0 0 rgba(142,210,74,0.5); }
-      50% { box-shadow: 0 0 0 5px rgba(142,210,74,0); }
+      50%       { box-shadow: 0 0 0 5px rgba(142,210,74,0); }
     }
 
     .controls-box {
@@ -276,10 +275,10 @@
       white-space: nowrap;
     }
     .mc-btn:active { transform: scale(0.97); }
-    .mc-btn:hover { filter: brightness(1.15); }
-    .btn-unlock { background: var(--gold); color: #1a1000; }
+    .mc-btn:hover  { filter: brightness(1.15); }
+    .btn-unlock { background: var(--gold);  color: #1a1000; }
     .btn-start  { background: var(--green); color: #fff; }
-    .btn-stop   { background: var(--red); color: #fff; }
+    .btn-stop   { background: var(--red);   color: #fff; }
 
     .ctrl-btns {
       display: flex;
@@ -320,11 +319,7 @@
       color: var(--muted);
     }
 
-    .blur-hint {
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-bottom: 22px;
-    }
+    .blur-hint { font-size: 0.78rem; color: var(--muted); margin-bottom: 22px; }
 
     #gallery { columns: 3; column-gap: 10px; }
 
@@ -483,11 +478,9 @@
       <div class="lock-msg" id="lock-msg">Enter the server password to enable start / stop</div>
       <div class="ctrl-btns" id="ctrl-btns">
         <button class="mc-btn btn-start" onclick="serverAction('start')">Start Server</button>
-        <button class="mc-btn btn-stop" onclick="serverAction('stop')">Stop Server</button>
+        <button class="mc-btn btn-stop"  onclick="serverAction('stop')">Stop Server</button>
       </div>
-      <div class="notice">
-        Note: Start / Stop are UI-only for now. A small backend script needs to run on the host PC to make these actually work — ask Abel to set that up!
-      </div>
+      <div class="notice" id="action-notice"></div>
     </div>
   </section>
 
@@ -515,11 +508,15 @@
   </div>
 
   <script>
-    const FOLDER_ID = '1hGzKb7JICrGaD7D75tmtakUt7L7ITqpM';
-    const API_KEY   = 'AIzaSyDAs0_lPrna4KQpAu-uAAHVrutQ8U-8sl0';
-    const SERVER_IP = 'your.ip.here';
-    const PASSWORD  = 'sugarcraft2026';
+    // ── CONFIG ─────────────────────────────────────────────
+    const FOLDER_ID    = '1hGzKb7JICrGaD7D75tmtakUt7L7ITqpM';
+    const API_KEY      = 'AIzaSyDAs0_lPrna4KQpAu-uAAHVrutQ8U-8sl0';
+    const SERVER_IP    = 'your.ip.here';
+    const PASSWORD     = 'sugarcraft2026';
+    const CONTROL_URL  = 'http://localhost:5050'; // Flask backend on host PC
+    // ───────────────────────────────────────────────────────
 
+    // SERVER STATUS
     async function fetchStatus() {
       try {
         const res  = await fetch(`https://api.mcsrvstat.us/3/${SERVER_IP}`);
@@ -546,6 +543,7 @@
     fetchStatus();
     setInterval(fetchStatus, 30000);
 
+    // PASSWORD UNLOCK
     function unlockControls() {
       const val  = document.getElementById('pw-input').value;
       const msg  = document.getElementById('lock-msg');
@@ -568,10 +566,31 @@
       if (e.key === 'Enter') unlockControls();
     });
 
-    function serverAction(a) {
-      alert(`"${a}" triggered!\nA backend script on the host PC is needed to make this actually work.`);
+    // START / STOP — calls Flask backend on host PC
+    async function serverAction(action) {
+      const notice = document.getElementById('action-notice');
+      notice.style.display = 'block';
+      notice.style.color = 'rgba(232,160,32,0.7)';
+      notice.textContent = `Sending ${action} command...`;
+      try {
+        const res  = await fetch(`${CONTROL_URL}/${action}`, { method: 'POST' });
+        const data = await res.json();
+        const msgs = {
+          started:         'Server is starting up!',
+          stopped:         'Server has been stopped.',
+          already_running: 'Server is already running.',
+          not_running:     'Server is not currently running.',
+        };
+        notice.textContent = msgs[data.status] ?? `Response: ${data.status}`;
+        notice.style.color = data.status === 'started' ? 'var(--green-ll)' : 'rgba(232,160,32,0.7)';
+        setTimeout(fetchStatus, 5000);
+      } catch(e) {
+        notice.style.color = 'var(--red)';
+        notice.textContent = 'Could not reach the control script. Make sure run_hidden.vbs is running on the host PC!';
+      }
     }
 
+    // GALLERY
     async function loadGallery() {
       const container = document.getElementById('gallery');
       container.innerHTML = '';
@@ -609,6 +628,7 @@
       }
     }
 
+    // LIGHTBOX
     function openLb(src) {
       document.getElementById('lb-img').src = src;
       document.getElementById('lightbox').classList.add('open');
